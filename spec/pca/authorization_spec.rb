@@ -144,6 +144,19 @@ RSpec.describe PCA::Authorization do
         "two" => %i(create update)
       )
     end
+
+    it "inherits grants from superclasses" do
+      stub_const("User", user_class)
+      klass.authorize_persona(class_name: "User")
+      klass.grant(
+        one: "index"
+      )
+
+      subclass = Class.new(klass)
+      expect(subclass.authorized_actions).to eq(
+        "one" => [:index]
+      )
+    end
   end
 
   describe ".authorization_persona" do
