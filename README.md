@@ -146,6 +146,13 @@ In the scenario above, trainees will only be authorized to `index` and
 `create` comments as well (as well as any other actions that may be
 defined).
 
+Grants are inherited by subclasses, but every grant encountered
+completely overrides any previous grants. This is by design to prevent
+accidental privilege leakage into high-security controllers. If you see
+a grant definition in a controller, you can be confident that that is
+the complete definition for that controller and that no other grants
+apply.
+
 4. Make display decisions based on authorization in your views:
 
 ```erb
@@ -170,6 +177,7 @@ class BillSearch
   end
 
   def bills
+    # PCA::Persona provides #[tier]_and_above? methods for all defined tiers
     relation = searcher.admin_or_above? ? Bills.all : Bills.nonsensitive
     relation.where('title like ?', query)
   end
