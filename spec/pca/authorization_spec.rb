@@ -4,6 +4,7 @@ RSpec.describe PCA::Authorization do
   let(:base_controller_class) do
     Class.new.tap do |k|
       allow(k).to receive(:helper_method)
+      allow(k).to receive(:before_action)
     end
   end
 
@@ -22,10 +23,6 @@ RSpec.describe PCA::Authorization do
         { action: @action }
       end
     end
-  end
-
-  before do
-    allow(klass).to receive(:before_action)
   end
 
   let(:user_model_name) { instance_double(ActiveModel::Name, singular_route_key: "user") }
@@ -57,6 +54,11 @@ RSpec.describe PCA::Authorization do
   it "registers authorization_current_user as a helper method" do
     klass
     expect(base_controller_class).to have_received(:helper_method).with(:authorization_current_user)
+  end
+
+  it "registers the authorize! hook" do
+    klass
+    expect(base_controller_class).to have_received(:before_action).with(:authorize!)
   end
 
   describe ".authorize_persona" do
@@ -93,13 +95,6 @@ RSpec.describe PCA::Authorization do
 
       klass.authorize_persona(class_name: "User")
       expect { klass.authorize_persona(class_name: "User") }.to raise_error(/configure authorization once/)
-    end
-    it "registers the authorize! hook" do
-      stub_const("User", user_class)
-
-      klass.authorize_persona(class_name: "User")
-
-      expect(klass).to have_received(:before_action).with(:authorize!)
     end
   end
 

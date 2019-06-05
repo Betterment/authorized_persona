@@ -9,6 +9,8 @@ module PCA
       self.authorized_actions = {}
 
       helper_method :authorization_current_user
+
+      before_action :authorize!
     end
 
     class_methods do
@@ -23,8 +25,6 @@ module PCA
         raise PCA::Error, "#{class_name} must be a PCA::Persona" unless authorization_persona < PCA::Persona
 
         self.authorization_current_user_method = current_user_method || :"current_#{authorization_persona.model_name.singular_route_key}"
-
-        before_action :authorize!
       end
 
       # Grants replace all previous grants to avoid privilege leakage
