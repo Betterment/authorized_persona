@@ -2,9 +2,8 @@ PATH
   remote: .
   specs:
     pca (0.1.0)
-      activemodel (>= 5.2.3, < 7)
-      activesupport (>= 5.2.3, < 7)
-      railties (>= 5.2.3, < 7)
+      activemodel (>= 5.1.6.2, < 7)
+      railties (>= 5.1.6.2, < 7)
 
 GEM
   remote: https://rubygems.org/

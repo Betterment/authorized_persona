@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["john@betterment.com"]
 
   spec.summary     = "Persona Centric Authorization"
-  spec.description = "PCA (Persona Centric Authorization) is the simplest turnkey authorization library you will ever love"
+  spec.description = "PCA (Persona Centric Authorization) is the simplest authorization library you will ever love"
   spec.homepage    = "https://github.com/Betterment/pca"
   spec.license       = "MIT"
 
@@ -22,11 +22,10 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  rails_version_range = [">= 5.2.3", "< 7"]
+  rails_version_range = [">= 5.1.6.2", "< 7"]
 
-  spec.add_dependency "activemodel",   *rails_version_range
-  spec.add_dependency "activesupport", *rails_version_range
-  spec.add_dependency "railties",      *rails_version_range
+  spec.add_dependency "activemodel", *rails_version_range
+  spec.add_dependency "railties",    *rails_version_range
 
   spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rake", "~> 10.0"
