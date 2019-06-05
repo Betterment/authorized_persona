@@ -127,6 +127,23 @@ RSpec.describe PCA::Authorization do
         )
       }.to raise_error(/invalid grant.*extra keys.*bologne/)
     end
+
+    it "clears previous grants on unrelated actions when overridden" do
+      stub_const("User", user_class)
+      klass.authorize_persona(class_name: "User")
+      klass.grant(
+        one: "index",
+        two: %w(create update),
+        three: "all"
+      )
+      klass.grant(
+        two: %w(create update)
+      )
+
+      expect(klass.authorized_actions).to eq(
+        "two" => %i(create update)
+      )
+    end
   end
 
   describe ".authorization_persona" do
