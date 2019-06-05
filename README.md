@@ -71,7 +71,7 @@ We'll assume you're using an authentication library like `devise` or
 1.  Integrate PCA into your user model.
 
 The example uses ActiveRecord, but any ActiveModel-based ORM will do.
-Your model only needs to have a a string attribute named
+Your model only needs to have a string attribute named
 `authorization_tier`.
 
 ```ruby

@@ -65,13 +65,16 @@ RSpec.describe PCA::Authorization do
     it "blows up with no class_name" do
       expect { klass.authorize_persona }.to raise_error(/missing keyword/)
     end
+
     it "blows up with a non-string class_name" do
       expect { klass.authorize_persona(class_name: :foo) }.to raise_error(/must be a string/)
     end
+
     it "blows up if class_name doesn't resolve to a PCA::Persona" do
       stub_const("User", Class.new)
       expect { klass.authorize_persona(class_name: "User") }.to raise_error(/must be a PCA::Persona/)
     end
+
     it "blows up if current_user_method is defined and not a symbol" do
       stub_const("User", user_class)
 

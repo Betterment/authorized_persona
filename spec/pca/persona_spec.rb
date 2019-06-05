@@ -83,7 +83,7 @@ RSpec.describe PCA::Persona do
     end
   end
 
-  describe "#[tier]_or_above? and aiuthorization_tier_at_or_above?" do
+  describe "#[tier]_or_above? and authorization_tier_at_or_above?" do
     before do
       klass.authorization_tiers(
         trainee: "Trainee - limited access",
