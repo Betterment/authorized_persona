@@ -34,7 +34,7 @@ your data model and trust root chaining. But even when more access
 control logic is required, you will develop simpler, better-fit
 solutions within your application.
 
-Which lead us to the following conclusions:
+Which led us to the following conclusions:
 
 * Applications should be built for a single persona each.
 * In Rails applications, authorization should be granted and enforced
