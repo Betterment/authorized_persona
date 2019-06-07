@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-RSpec.describe PCA::Persona do
+RSpec.describe AuthorizedPersona::Persona do
   let(:klass) do
     Class.new do
-      include PCA::Persona
+      include AuthorizedPersona::Persona
 
       def initialize(authorization_tier)
         @authorization_tier = authorization_tier
@@ -143,7 +143,7 @@ RSpec.describe PCA::Persona do
   context "with a class with a custom attribute name" do
     let(:klass) do
       Class.new do
-        include PCA::Persona
+        include AuthorizedPersona::Persona
 
         self.authorization_tier_attribute_name = :role
         authorization_tiers(

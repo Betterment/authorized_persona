@@ -1,16 +1,16 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "pca/version"
+require "authorized_persona/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "pca"
-  spec.version       = PCA::VERSION
+  spec.name          = "authorized_persona"
+  spec.version       = AuthorizedPersona::VERSION
   spec.authors       = ["John Mileham"]
   spec.email         = ["john@betterment.com"]
 
-  spec.summary     = "Persona Centric Authorization"
-  spec.description = "PCA (Persona Centric Authorization) is the simplest authorization library you will ever love"
-  spec.homepage    = "https://github.com/Betterment/pca"
+  spec.summary     = "the simplest authorization library you will ever love"
+  spec.description = "AuthorizedPersona is a rails implementation of Betterment's Persona Centric Authorization pattern"
+  spec.homepage    = "https://github.com/Betterment/authorized_persona"
   spec.license       = "MIT"
 
   # Specify which files should be added to the gem when it is released.

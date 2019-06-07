@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-RSpec.describe PCA::ViewHelpers do
+RSpec.describe AuthorizedPersona::ViewHelpers do
   let(:klass) do
     Class.new do
-      include PCA::ViewHelpers
+      include AuthorizedPersona::ViewHelpers
 
       def authorization_current_user
         "user_1"

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe PCA::Authorization do
+RSpec.describe AuthorizedPersona::Authorization do
   let(:base_controller_class) do
     Class.new.tap do |k|
       allow(k).to receive(:helper_method)
@@ -10,7 +10,7 @@ RSpec.describe PCA::Authorization do
 
   let(:klass) do
     Class.new(base_controller_class) do
-      include PCA::Authorization
+      include AuthorizedPersona::Authorization
 
       attr_reader :current_user
 
@@ -30,7 +30,7 @@ RSpec.describe PCA::Authorization do
   let(:user_class) do
     model_name = user_model_name
     Class.new do
-      include PCA::Persona
+      include AuthorizedPersona::Persona
 
       attr_reader :authorization_tier
 
@@ -70,9 +70,9 @@ RSpec.describe PCA::Authorization do
       expect { klass.authorize_persona(class_name: :foo) }.to raise_error(/must be a string/)
     end
 
-    it "blows up if class_name doesn't resolve to a PCA::Persona" do
+    it "blows up if class_name doesn't resolve to a AuthorizedPersona::Persona" do
       stub_const("User", Class.new)
-      expect { klass.authorize_persona(class_name: "User") }.to raise_error(/must be a PCA::Persona/)
+      expect { klass.authorize_persona(class_name: "User") }.to raise_error(/must be an AuthorizedPersona::Persona/)
     end
 
     it "blows up if current_user_method is defined and not a symbol" do
