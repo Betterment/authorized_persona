@@ -1,4 +1,4 @@
-module PCA
+module AuthorizedPersona
   module Persona
     extend ActiveSupport::Concern
 
@@ -10,7 +10,7 @@ module PCA
 
       # Override the attribute name for authorization_tier
       def authorization_tier_attribute_name=(override)
-        raise PCA::Error, "authorization_tier_attribute_name must be a symbol" unless override.is_a?(Symbol)
+        raise AuthorizedPersona::Error, "authorization_tier_attribute_name must be a symbol" unless override.is_a?(Symbol)
 
         @authorization_tier_attribute_name = override
       end
@@ -27,7 +27,7 @@ module PCA
 
       # Configure the authorization tiers in my_tier_slug: "My Tier Title And Description" form from lowest to highest privilege.
       def authorization_tiers(tiers) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-        raise PCA::Error, "you can only define authorization tiers once" if instance_variable_defined?(:@authorization_tiers)
+        raise AuthorizedPersona::Error, "you can only define authorization tiers once" if instance_variable_defined?(:@authorization_tiers)
 
         if !tiers.is_a?(Hash) || !tiers.all? { |k, v| k.is_a?(Symbol) && v.is_a?(String) }
           raise('you must provide a hash of symbol tier names and string descriptions, e.g. " +

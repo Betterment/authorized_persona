@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pca (0.1.0)
+    authorized_persona (0.1.0)
       activemodel (>= 5.1.6.2, < 7)
       railties (>= 5.1.6.2, < 7)
 
@@ -102,8 +102,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  authorized_persona!
   bundler (~> 2.0)
-  pca!
   rake (~> 10.0)
   rspec (~> 3.0)
   rubocop-betterment

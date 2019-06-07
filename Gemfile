@@ -1,4 +1,4 @@
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in pca.gemspec
+# Specify your gem's dependencies in authorized_persona.gemspec
 gemspec

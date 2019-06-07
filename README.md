@@ -1,7 +1,10 @@
-# Persona Centric Authorization
+# AuthorizedPersona
 
-Persona Centric Authorization is an extremely simple declarative Rails
-authorization library animated by the following observations:
+AuthorizedPersona is an extremely simple, declarative Rails
+authorization library implementing the Persona Centric Authorization
+pattern that Betterment developed for their internal tooling.
+
+Persona Centric Authorization is animated by the following observations:
 
 * Organizations are made up of folks with different skill sets and
   responsibilities. For the purposes of this library, we'll call a
@@ -45,14 +48,14 @@ available.
   single privilege ladder where each tier's access is a superset of
 the prior tier's in order to adhere to the principle of least privilege.
 
-If that all sounds good to you, you should use PCA.
+If that all sounds good to you, you should use AuthorizedPersona.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'pca'
+gem 'authorized_persona'
 ```
 
 And then execute:
@@ -61,14 +64,14 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install pca
+    $ gem install authorized_persona
 
 ## Usage
 
 We'll assume you're using an authentication library like `devise` or
 `clearance` that provides a `current_user` method.
 
-1.  Integrate PCA into your user model.
+1.  Integrate AuthorizedPersona into your user model.
 
 The example uses ActiveRecord, but any ActiveModel-based ORM will do.
 Your model only needs to have a string attribute named
@@ -77,7 +80,7 @@ Your model only needs to have a string attribute named
 ```ruby
 # app/models/user.rb
 class User < ApplicationRecord
-  include PCA::Persona
+  include AuthorizedPersona::Persona
 
   authorization_tiers(
     trainee: "Trainee - limited access",
@@ -89,7 +92,7 @@ class User < ApplicationRecord
   # self.authorization_tier_attribute_name = :auth_tier
 
   # If you want to use validations to keep bad data from making it into your table
-  # do the following. The authorization_tier_names method is defined by PCA based
+  # do the following. The authorization_tier_names method is defined by AuthorizedPersona based
   # on the `authorization_tiers` declaration above.
   validates :authorization_tier, inclusion: { in: authorization_tier_names }
 
@@ -97,12 +100,12 @@ class User < ApplicationRecord
 end
 ```
 
-2. Add PCA to your base controller:
+2. Add AuthorizedPersona to your base controller:
 
 ```ruby
 # app/controllers/application_controller.rb
 class ApplicationController < ActionController::Base
-  include PCA::Authorization
+  include AuthorizedPersona::Authorization
 
   authorize_persona class_name: "User"
 
@@ -177,7 +180,7 @@ class BillSearch
   end
 
   def bills
-    # PCA::Persona provides #[tier]_and_above? methods for all defined tiers
+    # AuthorizedPersona::Persona provides #[tier]_and_above? methods for all defined tiers
     relation = searcher.admin_or_above? ? Bills.all : Bills.nonsensitive
     relation.where('title like ?', query)
   end
@@ -192,7 +195,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/Betterment/pca. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Betterment/authorized_persona. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -200,4 +203,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the PCA project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/Betterment/pca/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the AuthorizedPersona project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/Betterment/authorized_persona/blob/master/CODE_OF_CONDUCT.md).
