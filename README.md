@@ -73,7 +73,7 @@ We'll assume you're using an authentication library like `devise` or
 
 1.  Integrate AuthorizedPersona into your user model.
 
-The example uses ActiveRecord, but any ActiveModel-based ORM will do.
+The example uses ActiveRecord, but any ActiveModel-like ORM will do.
 Your model only needs to have a string attribute named
 `authorization_tier`.
 
