@@ -56,9 +56,9 @@ RSpec.describe AuthorizedPersona::Authorization do
     expect(base_controller_class).to have_received(:helper_method).with(:authorization_current_user)
   end
 
-  it "registers the authorize! hook" do
+  it "doesn't eagerly register the authorize! hook to allow the consumer to set hook ordering" do
     klass
-    expect(base_controller_class).to have_received(:before_action).with(:authorize!)
+    expect(base_controller_class).not_to have_received(:before_action).with(:authorize!)
   end
 
   describe ".authorize_persona" do
@@ -98,6 +98,16 @@ RSpec.describe AuthorizedPersona::Authorization do
 
       klass.authorize_persona(class_name: "User")
       expect { klass.authorize_persona(class_name: "User") }.to raise_error(/configure authorization once/)
+    end
+
+    it "registers the authorize! hook to allow the consumer to set hook ordering" do
+      stub_const("User", user_class)
+
+      expect(base_controller_class).not_to have_received(:before_action).with(:authorize!)
+
+      klass.authorize_persona(class_name: "User")
+
+      expect(base_controller_class).to have_received(:before_action).with(:authorize!)
     end
   end
 
