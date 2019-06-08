@@ -2,6 +2,14 @@ module AuthorizedPersona
   module Persona
     extend ActiveSupport::Concern
 
+    included do
+      if respond_to?(:where)
+        def self.with_authorization_tier_at_or_above(tier)
+          where(authorization_tier_attribute_name => authorization_tier_names.drop(authorization_tier_level(tier)))
+        end
+      end
+    end
+
     class_methods do
       # Get the attribute name for authorization_tier
       def authorization_tier_attribute_name
@@ -41,6 +49,19 @@ module AuthorizedPersona
           tiers.keys.each do |tier|
             define_method "#{tier}_or_above?" do
               authorization_tier_at_or_above?(tier)
+            end
+          end
+        end
+
+        if respond_to?(:with_authorization_tier_at_or_above)
+          class_methods = Module.new
+          extend class_methods
+
+          class_methods.module_eval do
+            tiers.keys.each do |tier|
+              define_method "#{tier}_or_above" do
+                with_authorization_tier_at_or_above(tier)
+              end
             end
           end
         end

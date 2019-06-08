@@ -192,6 +192,24 @@ class BillSearch
 end
 ```
 
+6. (Advanced) If you need to determine which users are at or above an
+   authorization tier, e.g. for fanning out notifications:
+
+```ruby
+# app/jobs/sensitive_bill_notification_job.rb
+class SensitiveBillNotificationJob < ApplicationJob
+
+  def perform(bill_id)
+    bill = Bill.find(bill_id)
+    # AuthorizedPersona::Persona provides a `.[tier]_or_above` scope if
+    # your ORM supports a `.where` method
+    User.admin_or_above.find_each do |admin|
+      AdminMailer.with(user: admin, bill: bill).sensitive_bill_notification.deliver_later
+    end
+  end
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
