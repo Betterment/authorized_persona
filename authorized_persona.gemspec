@@ -24,9 +24,9 @@ Gem::Specification.new do |spec|
 
   rails_version_range = [">= 5.1.6.2", "< 7"]
 
-  spec.add_dependency "activemodel", *rails_version_range
-  spec.add_dependency "railties",    *rails_version_range
+  spec.add_dependency "railties", *rails_version_range
 
+  spec.add_development_dependency "activemodel", *rails_version_range
   spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"

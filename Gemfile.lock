@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     authorized_persona (0.1.0)
-      activemodel (>= 5.1.6.2, < 7)
       railties (>= 5.1.6.2, < 7)
 
 GEM
@@ -102,6 +101,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activemodel (>= 5.1.6.2, < 7)
   authorized_persona!
   bundler (~> 2.0)
   rake (~> 10.0)

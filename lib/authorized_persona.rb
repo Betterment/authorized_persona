@@ -1,7 +1,6 @@
 require "authorized_persona/version"
 
 require "rails"
-require "active_model"
 
 require "authorized_persona/persona"
 require "authorized_persona/authorization"
