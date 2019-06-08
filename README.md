@@ -107,6 +107,11 @@ end
 class ApplicationController < ActionController::Base
   include AuthorizedPersona::Authorization
 
+  # Any needed hooks your authentication library needs to ensure
+  # `current_user` is set before # authorization, e.g.:
+  #
+  # before_filter :authenticate_user!
+
   authorize_persona class_name: "User"
 
   # or optionally override the method name we use to fetch current_[class_name] e.g.:
