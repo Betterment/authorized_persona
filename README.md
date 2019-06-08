@@ -118,7 +118,8 @@ end
 ```
 
 At this point, no user is authorized to make a request to any descendent
-of `ApplicationController`.
+of `ApplicationController`. Note that any unauthenticated controllers (e.g. authentication
+controllers) will need to have authorization disabled via `skip_before_action :authorize!`.
 
 3. Grant privileges in your base controller or any subclass:
 
