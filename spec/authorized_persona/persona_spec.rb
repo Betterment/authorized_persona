@@ -1,8 +1,12 @@
 require 'spec_helper'
 
 RSpec.describe AuthorizedPersona::Persona do
+  let(:orm) do
+    Class.new
+  end
+
   let(:klass) do
-    Class.new do
+    Class.new(orm) do
       include AuthorizedPersona::Persona
 
       def initialize(authorization_tier)
@@ -10,6 +14,27 @@ RSpec.describe AuthorizedPersona::Persona do
       end
 
       attr_reader :authorization_tier
+    end
+  end
+
+  describe ".with_authorization_tier_at_or_above" do
+    it "is undefined if the ORM doesn't support .where" do
+      expect(klass).not_to respond_to(:with_authorization_tier_at_or_above)
+    end
+
+    it "delegates to a where clause for appropriate tiers if the ORM supports .where" do
+      relation = double
+      allow(orm).to receive(:where).and_return(relation)
+
+      klass.authorization_tiers(
+        regular: "regular",
+        admin: "admin",
+        superadmin: "superadmin"
+      )
+
+      expect(klass.with_authorization_tier_at_or_above('admin')).to eq(relation)
+
+      expect(orm).to have_received(:where).with(authorization_tier: %w(admin superadmin))
     end
   end
 
@@ -80,6 +105,33 @@ RSpec.describe AuthorizedPersona::Persona do
     it "blows up when called twice" do
       expect { klass.authorization_tiers(foo: "bar") }.not_to raise_error
       expect { klass.authorization_tiers(one_more: "thing") }.to raise_error(/once/)
+    end
+  end
+
+  describe ".[tier]_or_above" do
+    it "is undefined with an ORM that doesn't suppport .where" do
+      klass.authorization_tiers(
+        trainee: "Trainee - limited access",
+        staff: "Staff - regular access",
+        admin: "Admin - full access"
+      )
+
+      expect(klass).not_to respond_to(:staff_or_above)
+    end
+
+    it "delegates to .where when the ORM supports it" do
+      relation = double
+      allow(orm).to receive(:where).and_return(relation)
+
+      klass.authorization_tiers(
+        trainee: "Trainee - limited access",
+        staff: "Staff - regular access",
+        admin: "Admin - full access"
+      )
+
+      expect(klass.staff_or_above).to eq(relation)
+
+      expect(orm).to have_received(:where).with(authorization_tier: %w(staff admin))
     end
   end
 

@@ -73,7 +73,7 @@ We'll assume you're using an authentication library like `devise` or
 
 1.  Integrate AuthorizedPersona into your user model.
 
-The example uses ActiveRecord, but any ActiveModel-based ORM will do.
+The example uses ActiveRecord, but any ActiveModel-like ORM will do.
 Your model only needs to have a string attribute named
 `authorization_tier`.
 
@@ -106,6 +106,11 @@ end
 # app/controllers/application_controller.rb
 class ApplicationController < ActionController::Base
   include AuthorizedPersona::Authorization
+
+  # Any hooks your authentication library needs to ensure
+  # `current_user` is set before # authorization, e.g.:
+  #
+  # before_action :authenticate_user!
 
   authorize_persona class_name: "User"
 
@@ -184,6 +189,24 @@ class BillSearch
     # AuthorizedPersona::Persona provides #[tier]_and_above? methods for all defined tiers
     relation = searcher.admin_or_above? ? Bills.all : Bills.nonsensitive
     relation.where('title like ?', query)
+  end
+end
+```
+
+6. (Advanced) If you need to determine which users are at or above an
+   authorization tier, e.g. for fanning out notifications:
+
+```ruby
+# app/jobs/sensitive_bill_notification_job.rb
+class SensitiveBillNotificationJob < ApplicationJob
+
+  def perform(bill_id)
+    bill = Bill.find(bill_id)
+    # AuthorizedPersona::Persona provides a `.[tier]_or_above` scope if
+    # your ORM supports a `.where` method
+    User.admin_or_above.find_each do |admin|
+      AdminMailer.with(user: admin, bill: bill).sensitive_bill_notification.deliver_later
+    end
   end
 end
 ```

@@ -1,4 +1,5 @@
 require "bundler/setup"
+require "active_model"
 require "authorized_persona"
 
 RSpec.configure do |config|

@@ -51,14 +51,45 @@ RSpec.describe AuthorizedPersona::Authorization do
     end
   end
 
+  describe "for a non-activemodel persona" do
+    let(:non_activemodel_user_class) do
+      Class.new do
+        include AuthorizedPersona::Persona
+
+        def self.name
+          "NonActiveModelUser"
+        end
+
+        attr_reader :authorization_tier
+
+        def initialize(authorization_tier: nil)
+          @authorization_tier = authorization_tier
+        end
+
+        authorization_tiers(
+          one: "1",
+          two: "2",
+          three: "3",
+          four: "4"
+        )
+      end
+    end
+
+    it "sets its authorization_current_user_method to match class name" do
+      stub_const("SomeUser", non_activemodel_user_class)
+      klass.authorize_persona class_name: "SomeUser"
+      expect(klass.authorization_current_user_method).to eq(:current_non_active_model_user)
+    end
+  end
+
   it "registers authorization_current_user as a helper method" do
     klass
     expect(base_controller_class).to have_received(:helper_method).with(:authorization_current_user)
   end
 
-  it "registers the authorize! hook" do
+  it "doesn't eagerly register the authorize! hook to allow the consumer to set hook ordering" do
     klass
-    expect(base_controller_class).to have_received(:before_action).with(:authorize!)
+    expect(base_controller_class).not_to have_received(:before_action).with(:authorize!)
   end
 
   describe ".authorize_persona" do
@@ -98,6 +129,16 @@ RSpec.describe AuthorizedPersona::Authorization do
 
       klass.authorize_persona(class_name: "User")
       expect { klass.authorize_persona(class_name: "User") }.to raise_error(/configure authorization once/)
+    end
+
+    it "registers the authorize! hook to allow the consumer to set hook ordering" do
+      stub_const("User", user_class)
+
+      expect(base_controller_class).not_to have_received(:before_action).with(:authorize!)
+
+      klass.authorize_persona(class_name: "User")
+
+      expect(base_controller_class).to have_received(:before_action).with(:authorize!)
     end
   end
 
