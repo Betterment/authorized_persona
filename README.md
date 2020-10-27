@@ -116,7 +116,7 @@ class ApplicationController < ActionController::Base
 
   # or optionally override the method name we use to fetch current_[class_name] e.g.:
   #
-  # authorize_persona class_name: "User", current_user_method_name: :current_fancy_user
+  # authorize_persona class_name: "User", current_user_method: :current_fancy_user
 
   # Your code here...
 end
