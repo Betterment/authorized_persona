@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  rails_version_range = [">= 5.1.6.2", "< 8"]
+  rails_version_range = [">= 5.1.6.2", "< 7.1"]
 
   spec.add_dependency "railties", *rails_version_range
 

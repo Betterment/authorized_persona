@@ -2,6 +2,7 @@
 
 source "https://rubygems.org"
 
-gem "rails", "~> 7.0.0"
+gem "railties", "~> 7.0.0"
+gem "activemodel", "~>7.0.0"
 
 gemspec path: "../"

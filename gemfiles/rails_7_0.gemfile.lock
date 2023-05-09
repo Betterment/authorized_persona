@@ -1,37 +1,12 @@
 PATH
   remote: ..
   specs:
-    authorized_persona (0.9.0)
-      railties (>= 5.1.6.2, < 8)
+    authorized_persona (0.9.1)
+      railties (>= 5.1.6.2, < 7.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    actioncable (7.0.4.3)
-      actionpack (= 7.0.4.3)
-      activesupport (= 7.0.4.3)
-      nio4r (~> 2.0)
-      websocket-driver (>= 0.6.1)
-    actionmailbox (7.0.4.3)
-      actionpack (= 7.0.4.3)
-      activejob (= 7.0.4.3)
-      activerecord (= 7.0.4.3)
-      activestorage (= 7.0.4.3)
-      activesupport (= 7.0.4.3)
-      mail (>= 2.7.1)
-      net-imap
-      net-pop
-      net-smtp
-    actionmailer (7.0.4.3)
-      actionpack (= 7.0.4.3)
-      actionview (= 7.0.4.3)
-      activejob (= 7.0.4.3)
-      activesupport (= 7.0.4.3)
-      mail (~> 2.5, >= 2.5.4)
-      net-imap
-      net-pop
-      net-smtp
-      rails-dom-testing (~> 2.0)
     actionpack (7.0.4.3)
       actionview (= 7.0.4.3)
       activesupport (= 7.0.4.3)
@@ -39,34 +14,14 @@ GEM
       rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.2.0)
-    actiontext (7.0.4.3)
-      actionpack (= 7.0.4.3)
-      activerecord (= 7.0.4.3)
-      activestorage (= 7.0.4.3)
-      activesupport (= 7.0.4.3)
-      globalid (>= 0.6.0)
-      nokogiri (>= 1.8.5)
     actionview (7.0.4.3)
       activesupport (= 7.0.4.3)
       builder (~> 3.1)
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    activejob (7.0.4.3)
-      activesupport (= 7.0.4.3)
-      globalid (>= 0.3.6)
     activemodel (7.0.4.3)
       activesupport (= 7.0.4.3)
-    activerecord (7.0.4.3)
-      activemodel (= 7.0.4.3)
-      activesupport (= 7.0.4.3)
-    activestorage (7.0.4.3)
-      actionpack (= 7.0.4.3)
-      activejob (= 7.0.4.3)
-      activerecord (= 7.0.4.3)
-      activesupport (= 7.0.4.3)
-      marcel (~> 1.0)
-      mini_mime (>= 1.1.0)
     activesupport (7.0.4.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
@@ -86,36 +41,16 @@ GEM
     builder (3.2.4)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
-    date (3.3.3)
     diff-lcs (1.5.0)
     erubi (1.12.0)
-    globalid (1.1.0)
-      activesupport (>= 5.0)
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
     json (2.6.3)
     loofah (2.20.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    mail (2.8.1)
-      mini_mime (>= 0.1.1)
-      net-imap
-      net-pop
-      net-smtp
-    marcel (1.0.2)
     method_source (1.0.0)
-    mini_mime (1.1.2)
     minitest (5.18.0)
-    net-imap (0.3.4)
-      date
-      net-protocol
-    net-pop (0.1.2)
-      net-protocol
-    net-protocol (0.2.1)
-      timeout
-    net-smtp (0.3.3)
-      net-protocol
-    nio4r (2.5.9)
     nokogiri (1.14.3-x86_64-darwin)
       racc (~> 1.4)
     parallel (1.23.0)
@@ -125,20 +60,6 @@ GEM
     rack (2.2.7)
     rack-test (2.1.0)
       rack (>= 1.3)
-    rails (7.0.4.3)
-      actioncable (= 7.0.4.3)
-      actionmailbox (= 7.0.4.3)
-      actionmailer (= 7.0.4.3)
-      actionpack (= 7.0.4.3)
-      actiontext (= 7.0.4.3)
-      actionview (= 7.0.4.3)
-      activejob (= 7.0.4.3)
-      activemodel (= 7.0.4.3)
-      activerecord (= 7.0.4.3)
-      activestorage (= 7.0.4.3)
-      activesupport (= 7.0.4.3)
-      bundler (>= 1.15.0)
-      railties (= 7.0.4.3)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -199,25 +120,21 @@ GEM
       rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
     thor (1.2.1)
-    timeout (0.3.2)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
-    websocket-driver (0.7.5)
-      websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.5)
     zeitwerk (2.6.8)
 
 PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
-  activemodel (>= 5.1.6.2, < 8)
+  activemodel (~> 7.0.0)
   appraisal
   authorized_persona!
   betterlint
   bundler
-  rails (~> 7.0.0)
+  railties (~> 7.0.0)
   rake
   rspec (~> 3.0)
 
