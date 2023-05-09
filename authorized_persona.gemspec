@@ -22,13 +22,15 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  rails_version_range = [">= 5.1.6.2", "< 7"]
+  rails_version_range = [">= 5.1.6.2", "< 8"]
 
   spec.add_dependency "railties", *rails_version_range
 
   spec.add_development_dependency "activemodel", *rails_version_range
-  spec.add_development_dependency "bundler", "~> 2.0"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "appraisal"
+  spec.add_development_dependency "betterlint"
+  spec.add_development_dependency "bundler"
+  spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "rubocop-betterment"
+  spec.metadata['rubygems_mfa_required'] = 'true'
 end

@@ -29,7 +29,7 @@ RSpec.describe AuthorizedPersona::Persona do
       klass.authorization_tiers(
         regular: "regular",
         admin: "admin",
-        superadmin: "superadmin"
+        superadmin: "superadmin",
       )
 
       expect(klass.with_authorization_tier_at_or_above('admin')).to eq(relation)
@@ -64,12 +64,12 @@ RSpec.describe AuthorizedPersona::Persona do
       klass.authorization_tiers(
         one: "1 description",
         two: "2 description",
-        three: "3 description"
+        three: "3 description",
       )
       expect(klass.authorization_tier_collection).to eq(
         "1 description" => :one,
         "2 description" => :two,
-        "3 description" => :three
+        "3 description" => :three,
       )
     end
   end
@@ -79,7 +79,7 @@ RSpec.describe AuthorizedPersona::Persona do
       klass.authorization_tiers(
         one: "1",
         two: "2",
-        three: "3"
+        three: "3",
       )
       expect(klass.authorization_tier_names).to eq(%w(one two three))
     end
@@ -113,7 +113,7 @@ RSpec.describe AuthorizedPersona::Persona do
       klass.authorization_tiers(
         trainee: "Trainee - limited access",
         staff: "Staff - regular access",
-        admin: "Admin - full access"
+        admin: "Admin - full access",
       )
 
       expect(klass).not_to respond_to(:staff_or_above)
@@ -126,7 +126,7 @@ RSpec.describe AuthorizedPersona::Persona do
       klass.authorization_tiers(
         trainee: "Trainee - limited access",
         staff: "Staff - regular access",
-        admin: "Admin - full access"
+        admin: "Admin - full access",
       )
 
       expect(klass.staff_or_above).to eq(relation)
@@ -140,7 +140,7 @@ RSpec.describe AuthorizedPersona::Persona do
       klass.authorization_tiers(
         trainee: "Trainee - limited access",
         staff: "Staff - regular access",
-        admin: "Admin - full access"
+        admin: "Admin - full access",
       )
     end
 
@@ -201,7 +201,7 @@ RSpec.describe AuthorizedPersona::Persona do
         authorization_tiers(
           level_one: "One - ah ah ah",
           level_two: "Two - ah ah ah",
-          level_three: "Three! - ah ah ah"
+          level_three: "Three! - ah ah ah",
         )
 
         def initialize(role)
