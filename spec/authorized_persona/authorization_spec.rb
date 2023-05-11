@@ -42,7 +42,7 @@ RSpec.describe AuthorizedPersona::Authorization do
         one: "1",
         two: "2",
         three: "3",
-        four: "4"
+        four: "4",
       )
 
       define_singleton_method :model_name do
@@ -70,7 +70,7 @@ RSpec.describe AuthorizedPersona::Authorization do
           one: "1",
           two: "2",
           three: "3",
-          four: "4"
+          four: "4",
         )
       end
     end
@@ -149,13 +149,13 @@ RSpec.describe AuthorizedPersona::Authorization do
       klass.grant(
         one: "index",
         two: %w(create update),
-        three: "all"
+        three: "all",
       )
 
       expect(klass.authorized_actions).to eq(
         "one" => [:index],
         "two" => %i(create update),
-        "three" => [:all]
+        "three" => [:all],
       )
     end
 
@@ -167,7 +167,7 @@ RSpec.describe AuthorizedPersona::Authorization do
           one: "index",
           two: %w(create update),
           three: "all",
-          bologne: "all"
+          bologne: "all",
         )
       }.to raise_error(/invalid grant.*extra keys.*bologne/)
     end
@@ -178,14 +178,14 @@ RSpec.describe AuthorizedPersona::Authorization do
       klass.grant(
         one: "index",
         two: %w(create update),
-        three: "all"
+        three: "all",
       )
       klass.grant(
-        two: %w(create update)
+        two: %w(create update),
       )
 
       expect(klass.authorized_actions).to eq(
-        "two" => %i(create update)
+        "two" => %i(create update),
       )
     end
 
@@ -193,12 +193,12 @@ RSpec.describe AuthorizedPersona::Authorization do
       stub_const("User", user_class)
       klass.authorize_persona(class_name: "User")
       klass.grant(
-        one: "index"
+        one: "index",
       )
 
       subclass = Class.new(klass)
       expect(subclass.authorized_actions).to eq(
-        "one" => [:index]
+        "one" => [:index],
       )
     end
   end
@@ -260,7 +260,7 @@ RSpec.describe AuthorizedPersona::Authorization do
       klass.authorize_persona(class_name: "User")
       klass.grant(
         four: "show",
-        three: "show"
+        three: "show",
       )
 
       expect(klass.authorized_tier(action: "show")).to eq("three")
@@ -271,7 +271,7 @@ RSpec.describe AuthorizedPersona::Authorization do
       klass.authorize_persona(class_name: "User")
       klass.grant(
         four: :show,
-        three: :show
+        three: :show,
       )
 
       expect(klass.authorized_tier(action: :show)).to eq("three")
@@ -282,7 +282,7 @@ RSpec.describe AuthorizedPersona::Authorization do
       klass.authorize_persona(class_name: "User")
       klass.grant(
         three: :show,
-        two: :all
+        two: :all,
       )
 
       expect(klass.authorized_tier(action: :show)).to eq("two")

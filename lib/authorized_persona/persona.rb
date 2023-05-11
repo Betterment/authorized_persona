@@ -34,7 +34,7 @@ module AuthorizedPersona
       end
 
       # Configure the authorization tiers in my_tier_slug: "My Tier Title And Description" form from lowest to highest privilege.
-      def authorization_tiers(tiers) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def authorization_tiers(tiers) # rubocop:disable Metrics/AbcSize
         raise AuthorizedPersona::Error, "you can only define authorization tiers once" if instance_variable_defined?(:@authorization_tiers)
 
         if !tiers.is_a?(Hash) || !tiers.all? { |k, v| k.is_a?(Symbol) && v.is_a?(String) }

@@ -13,7 +13,7 @@ module AuthorizedPersona
 
     class_methods do
       # Configure authorization for an authorized persona class
-      def authorize_persona(class_name:, current_user_method: nil) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/LineLength
+      def authorize_persona(class_name:, current_user_method: nil) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/
         raise AuthorizedPersona::Error, "you can only configure authorization once" if authorization_persona_class_name.present?
         raise AuthorizedPersona::Error, "class_name must be a string" unless class_name.is_a?(String)
         raise AuthorizedPersona::Error, "current_user_method must be a symbol" if current_user_method && !current_user_method.is_a?(Symbol)
@@ -36,13 +36,13 @@ module AuthorizedPersona
 
       # Grants replace all previous grants to avoid privilege leakage
       def grant(privileges) # rubocop:disable Metrics/AbcSize
-        self.authorized_actions = Hash[privileges.map { |auth_tier, actions| [auth_tier.to_s, [actions].flatten.map(&:to_sym)] }]
+        self.authorized_actions = privileges.map { |auth_tier, actions| [auth_tier.to_s, [actions].flatten.map(&:to_sym)] }.to_h
 
         tier_names = authorization_persona.authorization_tier_names
         extra_keys = authorized_actions.keys - authorization_persona.authorization_tier_names
         if extra_keys.present?
           raise AuthorizedPersona::Error, "invalid grant: #{authorization_persona_class_name} " \
-            "has authorization tiers #{tier_names.join(', ')} but received extra keys: #{extra_keys.join(', ')}"
+                                          "has authorization tiers #{tier_names.join(', ')} but received extra keys: #{extra_keys.join(', ')}"
         end
       end
 
@@ -79,7 +79,7 @@ module AuthorizedPersona
     def authorization_current_user
       unless authorization_current_user_method.is_a?(Symbol)
         raise AuthorizedPersona::Error, "you must configure authorization with a valid current_user method name, " \
-          "e.g. `authorize_persona class_name: 'User', current_user_method: :my_custom_current_user`"
+                                        "e.g. `authorize_persona class_name: 'User', current_user_method: :my_custom_current_user`"
       end
 
       send(self.class.authorization_current_user_method)
@@ -89,7 +89,7 @@ module AuthorizedPersona
       self.class.authorized_tier(action: params[:action])
     end
 
-    def authorize! # rubocop:disable Metrics/MethodLength
+    def authorize!
       return if authorized?
 
       respond_to do |format|
