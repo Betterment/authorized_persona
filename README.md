@@ -186,7 +186,7 @@ class BillSearch
   end
 
   def bills
-    # AuthorizedPersona::Persona provides #[tier]_and_above? methods for all defined tiers
+    # AuthorizedPersona::Persona provides #[tier]_or_above? methods for all defined tiers
     relation = searcher.admin_or_above? ? Bills.all : Bills.nonsensitive
     relation.where('title like ?', query)
   end
