@@ -13,6 +13,7 @@ RSpec.describe AuthorizedPersona::Authorization do
       include AuthorizedPersona::Authorization
 
       attr_reader :current_user
+      private :current_user
 
       def initialize(current_user: nil, action: nil)
         @current_user = current_user
