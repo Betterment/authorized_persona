@@ -1,0 +1,12 @@
+---
+integration:
+  name: rspec
+requires:
+  - authorized_persona
+matcher:
+  subjects:
+    - AuthorizedPersona*
+mutation:
+  timeout: 1.0
+coverage_criteria:
+  timeout: true

@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+  spec.metadata['rubygems_mfa_required'] = 'true'
 
   rails_version_range = [">= 5.1.6.2", "< 7.1"]
 
@@ -30,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "appraisal"
   spec.add_development_dependency "betterlint"
   spec.add_development_dependency "bundler"
+  spec.add_development_dependency 'mutant-rspec'
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.metadata['rubygems_mfa_required'] = 'true'
 end
