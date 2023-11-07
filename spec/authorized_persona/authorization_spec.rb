@@ -218,17 +218,17 @@ RSpec.describe AuthorizedPersona::Authorization do
   end
 
   describe ".authorized?" do
-    it "blows up if provided current_user isn't the correct authorization_persona" do
+    before do
       stub_const("User", user_class)
       klass.authorize_persona(class_name: "User")
+    end
 
+    it "blows up if provided current_user isn't the correct authorization_persona" do
       cheeseburger = double("Cheeseburger") # rubocop:disable RSpec/VerifiedDoubles
       expect { klass.authorized?(current_user: cheeseburger, action: "show") }.to raise_error(/Cheeseburger.* is not a User/)
     end
 
     it "is not authorized if authorized level is higher than current_user's" do
-      stub_const("User", user_class)
-      klass.authorize_persona(class_name: "User")
       klass.grant(four: :show)
 
       user = user_class.new(authorization_tier: "three")
@@ -237,8 +237,6 @@ RSpec.describe AuthorizedPersona::Authorization do
     end
 
     it "is authorized if authorized level is same as current_user's" do
-      stub_const("User", user_class)
-      klass.authorize_persona(class_name: "User")
       klass.grant(three: :show)
 
       user = user_class.new(authorization_tier: "three")
@@ -290,18 +288,24 @@ RSpec.describe AuthorizedPersona::Authorization do
   end
 
   describe "#authorized?" do
-    it "blows up if no grants exist for an action" do
-      stub_const("User", user_class)
-      klass.authorize_persona(class_name: "User")
+    let(:authorize_opts) { { class_name: "User" } }
 
+    before do
+      stub_const("User", user_class)
+      klass.authorize_persona(**authorize_opts)
+    end
+
+    it "returns false when user is nil" do
+      expect(klass.new(current_user: nil, action: "show")).not_to be_authorized
+    end
+
+    it "blows up if no grants exist for an action" do
       user = user_class.new(authorization_tier: "four")
 
       expect { klass.new(current_user: user, action: "show").authorized? }.to raise_error(/missing authorization grant/)
     end
 
     it "is not authorized if authorized level is higher than current_user's" do
-      stub_const("User", user_class)
-      klass.authorize_persona(class_name: "User")
       klass.grant(four: :show)
 
       user = user_class.new(authorization_tier: "three")
@@ -310,8 +314,6 @@ RSpec.describe AuthorizedPersona::Authorization do
     end
 
     it "is authorized if authorized level is lower than current_user's" do
-      stub_const("User", user_class)
-      klass.authorize_persona(class_name: "User")
       klass.grant(two: :show)
 
       user = user_class.new(authorization_tier: "three")
@@ -320,8 +322,6 @@ RSpec.describe AuthorizedPersona::Authorization do
     end
 
     it "is authorized if authorized level is at current_user's" do
-      stub_const("User", user_class)
-      klass.authorize_persona(class_name: "User")
       klass.grant(three: :show)
 
       user = user_class.new(authorization_tier: "three")
@@ -330,13 +330,134 @@ RSpec.describe AuthorizedPersona::Authorization do
     end
 
     it "is authorized for an arbitrary action if level action is set to :all" do
-      stub_const("User", user_class)
-      klass.authorize_persona(class_name: "User")
       klass.grant(three: :all)
 
       user = user_class.new(authorization_tier: "three")
 
       expect(klass.new(current_user: user, action: "bumpity")).to be_authorized
+    end
+
+    context "with a specified current_user_method" do
+      let(:authorize_opts) { { class_name: "User", current_user_method: :custom_current_user } }
+
+      it "does not raise an error" do
+        user = user_class.new(authorization_tier: "four")
+        klass.define_method(:custom_current_user) { user }
+        klass.grant(four: 'show')
+
+        expect { klass.new(current_user: nil, action: "show").authorized? }.not_to raise_error
+      end
+    end
+
+    context 'with a non-symbol current_user method' do
+      let(:authorize_opts) { { class_name: "User" } }
+
+      it 'blows up' do
+        klass.grant(four: 'show')
+        klass.authorization_current_user_method = 'current_user'
+
+        expect { klass.new(current_user: nil, action: "show").authorized? }.to raise_error(
+          AuthorizedPersona::Error,
+          "you must configure authorization with a valid current_user method name, " \
+          "e.g. `authorize_persona class_name: 'User', current_user_method: :my_custom_current_user`",
+        )
+      end
+    end
+  end
+
+  describe '#authorize!' do
+    before do
+      stub_const("User", user_class)
+      klass.authorize_persona(class_name: "User")
+      klass.grant(one: "show")
+    end
+
+    let(:format) do
+      fmt = string_format
+      Class.new {
+        define_method(:html) do |&block|
+          instance_eval(&block) if fmt == 'html'
+        end
+
+        define_method(:json) do |&block|
+          instance_eval(&block) if fmt == 'json'
+        end
+
+        define_method(:any) do |&block|
+          instance_eval(&block)
+        end
+      }.new
+    end
+    let(:base_controller_class) do
+      fmt = format
+      k = Class.new do
+        define_method(:respond_to) do |&block|
+          block.call(fmt)
+        end
+      end
+      allow(k).to receive(:helper_method)
+      allow(k).to receive(:before_action)
+      k
+    end
+    let(:current_user) { nil }
+    let(:flash) { {} }
+
+    before do
+      allow(format).to receive(:flash).and_return(flash)
+      allow(format).to receive(:redirect_back)
+      allow(format).to receive(:render)
+      allow(format).to receive(:head)
+    end
+
+    subject { klass.new(current_user: current_user, action: "show") }
+
+    context 'when request format is HTML' do
+      let(:string_format) { 'html' }
+
+      it "sets a flash message and redirects back" do
+        subject.__send__(:authorize!)
+        expect(format).to have_received(:flash)
+        expect(flash).to eq(error: "You are not authorized to perform this action.")
+        expect(format).to have_received(:redirect_back).with(fallback_location: "/", allow_other_host: false)
+        expect(format).not_to have_received(:render)
+        expect(format).to have_received(:head).with(:unauthorized)
+      end
+
+      context 'when user is authorized' do
+        let(:current_user) { user_class.new(authorization_tier: "one") }
+
+        it "does not trigger any redirect or unauthorized behavior" do
+          subject.__send__(:authorize!)
+          expect(format).not_to have_received(:flash)
+          expect(format).not_to have_received(:redirect_back)
+          expect(format).not_to have_received(:render)
+          expect(format).not_to have_received(:head)
+        end
+      end
+    end
+
+    context 'when request format is JSON' do
+      let(:string_format) { 'json' }
+
+      it "sets a flash message and redirects back" do
+        subject.__send__(:authorize!)
+        expect(format).not_to have_received(:flash)
+        expect(format).not_to have_received(:redirect_back)
+        expect(format).to have_received(:render).with(json: {}, status: :unauthorized)
+        expect(format).to have_received(:head).with(:unauthorized)
+      end
+
+      context 'when user is authorized' do
+        let(:current_user) { user_class.new(authorization_tier: "one") }
+
+        it "does not trigger any redirect or unauthorized behavior" do
+          subject.__send__(:authorize!)
+          expect(format).not_to have_received(:flash)
+          expect(format).not_to have_received(:redirect_back)
+          expect(format).not_to have_received(:render)
+          expect(format).not_to have_received(:head)
+        end
+      end
     end
   end
 end

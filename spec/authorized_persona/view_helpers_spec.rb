@@ -26,7 +26,7 @@ RSpec.describe AuthorizedPersona::ViewHelpers do
   describe "#authorized_to?" do
     it "blows up if the route can't be located" do
       allow(rails_app.routes).to receive(:named_routes).and_return({})
-      expect { subject.authorized_to?(:create, :foo) }.to raise_error(/Unable to determine route/)
+      expect { subject.authorized_to?(:create, :foo) }.to raise_error(AuthorizedPersona::Error, /Unable to determine route for foo/)
     end
 
     it "blows up if it can't find a class matching the route's controller name" do

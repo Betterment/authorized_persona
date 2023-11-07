@@ -135,7 +135,7 @@ RSpec.describe AuthorizedPersona::Persona do
     end
   end
 
-  describe "#[tier]_or_above? and authorization_tier_at_or_above?" do
+  describe "#authorization_tier_at_or_above? and #[tier]_or_above?" do
     before do
       klass.authorization_tiers(
         trainee: "Trainee - limited access",
@@ -150,16 +150,19 @@ RSpec.describe AuthorizedPersona::Persona do
       it "is trainee_or_above" do
         expect(subject).to be_trainee_or_above
         expect(subject).to be_authorization_tier_at_or_above('trainee')
+        expect(subject.authorization_tier_at_or_above?('trainee')).to be(true)
       end
 
       it "is not staff_or_above" do
         expect(subject).not_to be_staff_or_above
         expect(subject).not_to be_authorization_tier_at_or_above('staff')
+        expect(subject.authorization_tier_at_or_above?('staff')).to be(false)
       end
 
       it "is not admin_or_above" do
         expect(subject).not_to be_admin_or_above
         expect(subject).not_to be_authorization_tier_at_or_above('admin')
+        expect(subject.authorization_tier_at_or_above?('admin')).to be(false)
       end
     end
 
@@ -169,16 +172,19 @@ RSpec.describe AuthorizedPersona::Persona do
       it "is trainee_or_above" do
         expect(subject).to be_trainee_or_above
         expect(subject).to be_authorization_tier_at_or_above('trainee')
+        expect(subject.authorization_tier_at_or_above?('trainee')).to be(true)
       end
 
       it "is staff_or_above" do
         expect(subject).to be_staff_or_above
         expect(subject).to be_authorization_tier_at_or_above('staff')
+        expect(subject.authorization_tier_at_or_above?('staff')).to be(true)
       end
 
       it "is admin_or_above" do
         expect(subject).to be_admin_or_above
         expect(subject).to be_authorization_tier_at_or_above('admin')
+        expect(subject.authorization_tier_at_or_above?('admin')).to be(true)
       end
     end
 
