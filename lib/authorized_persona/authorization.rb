@@ -82,11 +82,11 @@ module AuthorizedPersona
                      "e.g. `authorize_persona class_name: 'User', current_user_method: :my_custom_current_user`"
       end
 
-      send(self.class.authorization_current_user_method)
+      public_send(authorization_current_user_method)
     end
 
     def authorized_tier
-      self.class.authorized_tier(action: params[:action])
+      self.class.authorized_tier(action: params.fetch(:action))
     end
 
     def authorize!

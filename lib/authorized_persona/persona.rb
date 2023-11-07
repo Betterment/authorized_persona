@@ -78,7 +78,7 @@ module AuthorizedPersona
 
     def authorization_tier_at_or_above?(target_tier)
       attr_name = public_send(self.class.authorization_tier_attribute_name)
-      self.class.send(:authorization_tier_level, attr_name) >= self.class.send(:authorization_tier_level, target_tier)
+      self.class.__send__(:authorization_tier_level, attr_name) >= self.class.__send__(:authorization_tier_level, target_tier)
     end
   end
 end
