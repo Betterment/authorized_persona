@@ -3,6 +3,22 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: ['3.0', '3.2']
+    name: Ruby ${{ matrix.ruby }} Semantic Coverage (incremental)
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Verify mutation coverage
+        run: |
+          git fetch origin main --depth 1 --quiet # we need a reference for incremental mutation testing
+          bundle exec mutant run --since origin/main
   test:
     runs-on: ubuntu-latest
     strategy:
