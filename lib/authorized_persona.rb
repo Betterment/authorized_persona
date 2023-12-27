@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "authorized_persona/version"
 
 require "rails"
