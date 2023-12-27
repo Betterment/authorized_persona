@@ -49,7 +49,7 @@ module AuthorizedPersona
 
         instance_methods.module_eval do
           tiers.keys.each do |tier|
-            define_method "#{tier}_or_above?" do
+            define_method :"#{tier}_or_above?" do
               authorization_tier_at_or_above?(tier)
             end
           end
@@ -61,7 +61,7 @@ module AuthorizedPersona
 
           class_methods.module_eval do
             tiers.keys.each do |tier|
-              define_method "#{tier}_or_above" do
+              define_method :"#{tier}_or_above" do
                 with_authorization_tier_at_or_above(tier)
               end
             end
