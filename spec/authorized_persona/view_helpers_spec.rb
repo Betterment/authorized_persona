@@ -13,7 +13,7 @@ RSpec.describe AuthorizedPersona::ViewHelpers do
     end
   end
 
-  let(:rails_app) { instance_double(Rails::Application, routes: routes) }
+  let(:rails_app) { instance_double(Rails::Application, routes:) }
   let(:routes) { instance_double(ActionDispatch::Routing::RouteSet, named_routes: { foo: route }) }
   let(:route) { instance_double(ActionDispatch::Journey::Route, defaults: { controller: "foos" }) }
 
