@@ -13,7 +13,8 @@ Gem::Specification.new do |spec|
   spec.summary     = "the simplest authorization library you will ever love"
   spec.description = "AuthorizedPersona is a rails implementation of Betterment's Persona Centric Authorization pattern"
   spec.homepage    = "https://github.com/Betterment/authorized_persona"
-  spec.license       = "MIT"
+  spec.license     = "MIT"
+  spec.required_ruby_version = ">= 3.0"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -24,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  rails_version_range = [">= 5.1.6.2", "< 7.1"]
+  rails_version_range = [">= 6.1", "< 7.1"]
 
   spec.add_dependency "railties", *rails_version_range
 

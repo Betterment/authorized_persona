@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    authorized_persona (0.9.1)
-      railties (>= 5.1.6.2, < 7.1)
+    authorized_persona (0.10.0)
+      railties (>= 6.1, < 7.1)
 
 GEM
   remote: https://rubygems.org/
@@ -138,7 +138,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  activemodel (>= 5.1.6.2, < 7.1)
+  activemodel (>= 6.1, < 7.1)
   appraisal
   authorized_persona!
   betterlint
