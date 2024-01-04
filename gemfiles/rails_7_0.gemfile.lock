@@ -1,0 +1,149 @@
+PATH
+  remote: ..
+  specs:
+    authorized_persona (0.10.0)
+      railties (>= 6.1, < 7.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    actionpack (7.0.8)
+      actionview (= 7.0.8)
+      activesupport (= 7.0.8)
+      rack (~> 2.0, >= 2.2.4)
+      rack-test (>= 0.6.3)
+      rails-dom-testing (~> 2.0)
+      rails-html-sanitizer (~> 1.0, >= 1.2.0)
+    actionview (7.0.8)
+      activesupport (= 7.0.8)
+      builder (~> 3.1)
+      erubi (~> 1.4)
+      rails-dom-testing (~> 2.0)
+      rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    activemodel (7.0.8)
+      activesupport (= 7.0.8)
+    activesupport (7.0.8)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+    appraisal (2.5.0)
+      bundler
+      rake
+      thor (>= 0.14.0)
+    ast (2.4.2)
+    betterlint (1.7.0)
+      rubocop (> 1.0)
+      rubocop-performance
+      rubocop-rails
+      rubocop-rake
+      rubocop-rspec (>= 2.24)
+    builder (3.2.4)
+    concurrent-ruby (1.2.2)
+    crass (1.0.6)
+    diff-lcs (1.5.0)
+    erubi (1.12.0)
+    i18n (1.14.1)
+      concurrent-ruby (~> 1.0)
+    json (2.7.1)
+    language_server-protocol (3.17.0.3)
+    loofah (2.22.0)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.12.0)
+    method_source (1.0.0)
+    minitest (5.20.0)
+    nokogiri (1.15.5-x86_64-darwin)
+      racc (~> 1.4)
+    parallel (1.24.0)
+    parser (3.2.2.4)
+      ast (~> 2.4.1)
+      racc
+    racc (1.7.3)
+    rack (2.2.8)
+    rack-test (2.1.0)
+      rack (>= 1.3)
+    rails-dom-testing (2.2.0)
+      activesupport (>= 5.0.0)
+      minitest
+      nokogiri (>= 1.6)
+    rails-html-sanitizer (1.6.0)
+      loofah (~> 2.21)
+      nokogiri (~> 1.14)
+    railties (7.0.8)
+      actionpack (= 7.0.8)
+      activesupport (= 7.0.8)
+      method_source
+      rake (>= 12.2)
+      thor (~> 1.0)
+      zeitwerk (~> 2.5)
+    rainbow (3.1.1)
+    rake (13.1.0)
+    regexp_parser (2.8.3)
+    rexml (3.2.6)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.2)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.6)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-support (3.12.1)
+    rubocop (1.59.0)
+      json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
+      parallel (~> 1.10)
+      parser (>= 3.2.2.4)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.30.0, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 2.4.0, < 3.0)
+    rubocop-ast (1.30.0)
+      parser (>= 3.2.1.0)
+    rubocop-capybara (2.19.0)
+      rubocop (~> 1.41)
+    rubocop-factory_bot (2.24.0)
+      rubocop (~> 1.33)
+    rubocop-performance (1.20.1)
+      rubocop (>= 1.48.1, < 2.0)
+      rubocop-ast (>= 1.30.0, < 2.0)
+    rubocop-rails (2.23.1)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 1.33.0, < 2.0)
+      rubocop-ast (>= 1.30.0, < 2.0)
+    rubocop-rake (0.6.0)
+      rubocop (~> 1.0)
+    rubocop-rspec (2.25.0)
+      rubocop (~> 1.40)
+      rubocop-capybara (~> 2.17)
+      rubocop-factory_bot (~> 2.22)
+    ruby-progressbar (1.13.0)
+    thor (1.3.0)
+    tzinfo (2.0.6)
+      concurrent-ruby (~> 1.0)
+    unicode-display_width (2.5.0)
+    zeitwerk (2.6.12)
+
+PLATFORMS
+  x86_64-darwin-22
+  x86_64-linux
+
+DEPENDENCIES
+  activemodel (~> 7.0.0)
+  appraisal
+  authorized_persona!
+  betterlint
+  bundler
+  railties (~> 7.0.0)
+  rake
+  rspec (~> 3.0)
+
+BUNDLED WITH
+   2.4.21
