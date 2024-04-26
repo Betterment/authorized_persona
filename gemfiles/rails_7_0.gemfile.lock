@@ -1,8 +1,8 @@
 PATH
   remote: ..
   specs:
-    authorized_persona (0.10.0)
-      railties (>= 6.1, < 7.1)
+    authorized_persona (0.11.0)
+      railties (>= 6.1, < 7.2)
 
 GEM
   remote: https://rubygems.org/
@@ -52,6 +52,8 @@ GEM
       nokogiri (>= 1.12.0)
     method_source (1.0.0)
     minitest (5.20.0)
+    nokogiri (1.15.5-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.15.5-x86_64-darwin)
       racc (~> 1.4)
     parallel (1.24.0)
@@ -132,6 +134,7 @@ GEM
     zeitwerk (2.6.12)
 
 PLATFORMS
+  arm64-darwin-22
   x86_64-darwin-22
   x86_64-linux
 
