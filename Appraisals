@@ -14,4 +14,3 @@ appraise 'rails-7-1' do
   gem 'railties', '~> 7.1.0'
   gem 'activemodel', '~>7.1.0'
 end
-
