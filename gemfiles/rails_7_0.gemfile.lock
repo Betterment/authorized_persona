@@ -139,7 +139,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.6.0)
-    zeitwerk (2.7.1)
+    zeitwerk (2.6.18)
 
 PLATFORMS
   arm64-darwin-22
@@ -157,6 +157,7 @@ DEPENDENCIES
   railties (~> 7.0.0)
   rake
   rspec (~> 3.0)
+  zeitwerk (~> 2.6.18)
 
 BUNDLED WITH
    2.4.21
