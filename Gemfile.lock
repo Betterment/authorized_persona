@@ -75,11 +75,11 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     minitest (5.25.4)
-    nokogiri (1.18.2-arm64-darwin)
+    nokogiri (1.17.2-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.2-x86_64-darwin)
+    nokogiri (1.17.2-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.2-x86_64-linux-gnu)
+    nokogiri (1.17.2-x86_64-linux)
       racc (~> 1.4)
     parallel (1.26.3)
     parser (3.3.7.0)
@@ -195,6 +195,7 @@ DEPENDENCIES
   authorized_persona!
   betterlint
   bundler
+  nokogiri (~> 1.17.2)
   rake
   rspec (~> 3.0)
   zeitwerk (~> 2.6.18)
