@@ -58,6 +58,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.2-x86_64-darwin)
       racc (~> 1.4)
+    nokogiri (1.18.2-x86_64-linux-gnu)
+      racc (~> 1.4)
     parallel (1.26.3)
     parser (3.3.7.0)
       ast (~> 2.4.1)
@@ -143,6 +145,7 @@ PLATFORMS
   arm64-darwin-22
   arm64-darwin-23
   x86_64-darwin-22
+  x86_64-linux
 
 DEPENDENCIES
   activemodel (>= 6.1, < 8.1)
