@@ -9,6 +9,7 @@ inherit_mode:
     - Exclude
 
 AllCops:
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.2
+  TargetRailsVersion: 7.2
   Exclude:
     - gemfiles/*.gemfile

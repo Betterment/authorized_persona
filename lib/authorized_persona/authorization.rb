@@ -59,7 +59,7 @@ module AuthorizedPersona
       def authorized?(current_user:, action:)
         raise AuthorizedPersona::Error, "#{current_user} is not a #{authorization_persona}" unless current_user.is_a?(authorization_persona)
 
-        current_user.authorization_tier_at_or_above?(authorized_tier(action: action))
+        current_user.authorization_tier_at_or_above?(authorized_tier(action:))
       end
 
       def authorized_tier(action:)
