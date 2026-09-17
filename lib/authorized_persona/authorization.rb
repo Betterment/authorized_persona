@@ -15,7 +15,7 @@ module AuthorizedPersona
 
     class_methods do
       # Configure authorization for an authorized persona class
-      def authorize_persona(class_name:, current_user_method: nil) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/
+      def authorize_persona(class_name:, current_user_method: nil) # rubocop:disable Metrics/PerceivedComplexity
         raise AuthorizedPersona::Error, "you can only configure authorization once" if authorization_persona_class_name.present?
         raise AuthorizedPersona::Error, "class_name must be a string" unless class_name.is_a?(String)
         raise AuthorizedPersona::Error, "current_user_method must be a symbol" if current_user_method && !current_user_method.is_a?(Symbol)
@@ -97,7 +97,7 @@ module AuthorizedPersona
       respond_to do |format|
         format.html do
           flash[:error] = 'You are not authorized to perform this action.'
-          redirect_back fallback_location: '/', allow_other_host: false
+          redirect_back_or_to '/', allow_other_host: false
         end
         format.json do
           render json: {}, status: :unauthorized
